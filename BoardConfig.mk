@@ -109,8 +109,7 @@ BOARD_MOTOROLA_DYNAMIC_PARTITIONS_PARTITION_LIST := \
     system_ext \
     product \
     vendor \
-    vendor_dlkm \
-    system_dlkm
+    vendor_dlkm
 
 # super - 4MB safety margin
 BOARD_MOTOROLA_DYNAMIC_PARTITIONS_SIZE := 8585740288
