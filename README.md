@@ -16,6 +16,7 @@
 - At least 200 GB free disk space
 - 16 GB RAM (32 GB recommended)
 - `repo`, `git`, `python3`, and standard Android build tools installed
+- Open file descriptor limit of at least 16 000 (`ulimit -n 65535`)
 
 ### 1. Initialize the TWRP build manifest
 
@@ -50,6 +51,7 @@ repo sync -j$(nproc) --force-sync --no-clone-bundle --no-tags
 ```bash
 . build/envsetup.sh
 lunch twrp_mumba-eng
+ulimit -n 65535          # raise open-file limit; Android build requires >= 16000
 mka recoveryimage
 ```
 
