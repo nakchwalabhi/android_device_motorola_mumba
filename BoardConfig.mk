@@ -174,8 +174,6 @@ BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX_LOCATION := 2
 # Filesystem Configuration
 # =====================================================
 
-TARGET_FS_CONFIG_GEN += device/motorola/mumba/config.fs
-
 
 # =====================================================
 # TWRP Configuration
