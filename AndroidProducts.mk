@@ -3,10 +3,12 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/lineage_mumba.mk
+    $(LOCAL_DIR)/lineage_mumba.mk \
+    $(LOCAL_DIR)/twrp_mumba.mk
 
 COMMON_LUNCH_CHOICES := \
     lineage_mumba-user \
     lineage_mumba-userdebug \
     lineage_mumba-eng \
-    lineage_mumba-bp4a-userdebug
+    lineage_mumba-bp4a-userdebug \
+    twrp_mumba-eng
