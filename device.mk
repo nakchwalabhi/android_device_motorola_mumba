@@ -5,7 +5,6 @@
 #
 
 DEVICE_PATH := device/motorola/mumba
-PRODUCT_SHIPPING_API_LEVEL := 36
 
 # Dynamic partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
