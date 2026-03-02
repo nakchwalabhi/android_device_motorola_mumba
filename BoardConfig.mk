@@ -182,9 +182,15 @@ BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX_LOCATION := 2
 # UI / Theme
 TW_THEME := portrait_hdpi
 TW_EXTRA_LANGUAGES := true
-TW_SCREEN_BLANK_ON_BOOT := true
+TW_NO_SCREEN_BLANK := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_USE_TOOLBOX := true
+
+# Touch: load FTS touchscreen driver from vendor DLKM partition
+# The FTS (STMicroelectronics) touch driver is a vendor DLKM and is not
+# in the vendor_boot ramdisk; TWRP must load it from /vendor/lib/modules/
+# or /vendor_dlkm/lib/modules/ after mounting those partitions.
+TW_LOAD_VENDOR_MODULES := "fts_ts.ko"
 
 # Brightness (Qualcomm display backlight sysfs path)
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
