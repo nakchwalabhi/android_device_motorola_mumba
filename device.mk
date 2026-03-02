@@ -87,9 +87,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/keylayout/gpio-keys.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gpio-keys.kl \
     $(LOCAL_PATH)/configs/keylayout/uinput-fpc.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/uinput-fpc.kl
 
-# Input Device Configuration (IDC) — touchscreen
+# Input Device Configuration (IDC) — touchscreen panel variants
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/idc/fts_ts.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/fts_ts.idc
+    $(LOCAL_PATH)/configs/idc/Chipone-TDDI.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/Chipone-TDDI.idc \
+    $(LOCAL_PATH)/configs/idc/ILITEK-TDDI_1.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/ILITEK-TDDI_1.idc
 
 # Media
 PRODUCT_COPY_FILES += \
