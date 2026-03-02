@@ -32,6 +32,9 @@ TARGET_BOOTLOADER_BOARD_NAME := mumba
 BOARD_SHIPPING_API_LEVEL := 32
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 BUILD_BROKEN_VENDOR_PROPERTY_NAMESPACE := true
+# Allow soong_build to proceed when VTS proto fuzzer modules (vts_proto_fuzzer_default)
+# are absent — they live in test/vts/ which is not checked out in recovery-only manifests.
+ALLOW_MISSING_DEPENDENCIES := true
 
 # Vendor-specific AIDs (users/groups) for Qualcomm/Motorola init.rc files
 TARGET_FS_CONFIG_GEN := device/motorola/mumba/config.fs
