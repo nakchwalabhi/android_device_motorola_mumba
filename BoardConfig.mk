@@ -195,9 +195,10 @@ TW_USE_TOOLBOX := true
 #   - ILITEK (ILITek panel)             → ilitek_v4_mmi.ko
 # Neither driver is included in the vendor_boot ramdisk; TWRP must load
 # them from /vendor_dlkm/lib/modules/ after mounting that partition.
-# panel_event_notifier.ko is listed first to satisfy the DRM panel
-# notification dependency that both touch drivers require.
-TW_LOAD_VENDOR_MODULES := "panel_event_notifier.ko chipone_tddi_v3_mmi.ko ilitek_v4_mmi.ko"
+# panel_event_notifier.ko is NOT listed here because it is already loaded
+# from the vendor_boot recovery ramdisk (modules.load.recovery). libmodprobe
+# resolves it automatically via modules.dep when loading the touch drivers.
+TW_LOAD_VENDOR_MODULES := "chipone_tddi_v3_mmi.ko ilitek_v4_mmi.ko"
 
 # Brightness (Qualcomm display backlight sysfs path)
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"

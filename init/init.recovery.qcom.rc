@@ -80,14 +80,12 @@ on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
-on boot
-    # Ensure FTS touchscreen (STMicroelectronics) operates in normal kernel
-    # mode and is not locked to TrustZone (QTS trusted touch).
-    # These writes are safe to attempt; init will log but not fail if a
-    # sysfs node does not exist yet (e.g. module not yet loaded).
+# TWRP sets twrp.modules.loaded=true after TW_LOAD_VENDOR_MODULES completes.
+# At that point the ChipOne TDDI / ILITEK touch drivers are in the kernel and
+# their trusted_touch_enable sysfs nodes are live. Disable QTS (Qualcomm
+# Trusted Touch Session) so the kernel drivers can access the touch IC
+# directly without TrustZone arbitration.
+on property:twrp.modules.loaded=true
     write /sys/kernel/qts/primary/trusted_touch_enable 0
     write /sys/devices/platform/soc/990000.i2c/i2c-0/0-0038/trusted_touch_enable 0
     write /sys/devices/platform/soc/990000.spi/spi_master/spi0/spi0.0/trusted_touch_enable 0
-    # Wake the FTS touch panel from low-power mode.
-    # touch_aoi = Area-of-Interest (AOI) power control exposed by the FTS driver.
-    write /sys/class/fts/touch_aoi/power_set 1
