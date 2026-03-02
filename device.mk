@@ -103,3 +103,7 @@ PRODUCT_COPY_FILES += \
 # Wifi
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini
+
+# Touchscreen modules
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/modules/chipone_tddi_v3_mmi.ko:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/lib/modules/chipone_tddi_v3_mmi.ko
