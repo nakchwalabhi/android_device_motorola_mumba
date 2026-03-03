@@ -177,3 +177,57 @@ BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX_LOCATION := 2
 # =====================================================
 
 TARGET_FS_CONFIG_GEN += device/motorola/mumba/config.fs
+
+
+# =====================================================
+# TWRP / OrangeFox Recovery
+# =====================================================
+
+# UI theme — portrait display at HD resolution (720 x 1600)
+TW_THEME := portrait_hdpi
+
+# Extra languages support
+TW_EXTRA_LANGUAGES := true
+
+# Blank screen after boot to allow unlocking
+TW_SCREEN_BLANK_ON_BOOT := true
+
+# Blacklist virtual input devices used by fingerprint sensor
+TW_INPUT_BLACKLIST := "hbtp_vm"
+
+# Use toybox / toolbox instead of busybox
+TW_USE_TOOLBOX := true
+
+# Include repack tools for repacking boot/vendor_boot images
+TW_INCLUDE_REPACKTOOLS := true
+
+# Suppress "Secure Erase" option (not supported by UFS)
+BOARD_SUPPRESS_SECURE_ERASE := true
+
+# Exclude the default USB init scripts; device uses its own
+TW_EXCLUDE_DEFAULT_USB_INIT := true
+
+# No legacy properties (not applicable for Android 11+)
+TW_NO_LEGACY_PROPS := true
+
+# Do not attempt to bind-mount /system
+TW_NO_BIND_SYSTEM := true
+
+# Storage: sdcard emulated on /data (no physical sdcard slot)
+RECOVERY_SDCARD_ON_DATA := true
+BOARD_HAS_NO_REAL_SDCARD := true
+
+# Crypto: FBE (file-based encryption) with metadata decrypt
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_CRYPTO_FBE := true
+TW_INCLUDE_FBE_METADATA_DECRYPT := true
+
+# Use serial number as device ID
+TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
+
+# Device build version string shown in OrangeFox / TWRP
+TW_DEVICE_VERSION := mumba-1.0
+
+# Include logcat / logd for easier debugging
+TWRP_INCLUDE_LOGCAT := true
+TARGET_USES_LOGD := true
