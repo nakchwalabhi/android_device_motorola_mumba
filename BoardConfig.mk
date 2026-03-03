@@ -189,26 +189,12 @@ TW_NO_SCREEN_BLANK := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_USE_TOOLBOX := true
 
-# Touch: load touchscreen drivers from vendor DLKM partition
-# This device ships with two panel variants:
-#   - ChipOne TDDI (BOE / CSOT panel)  → chipone_tddi_v3_mmi.ko
-#   - ILITEK (ILITek panel)             → ilitek_v4_mmi.ko
-# Neither driver is included in the vendor_boot ramdisk; TWRP must load
-# them from /vendor_dlkm/lib/modules/ after mounting that partition.
-# panel_event_notifier.ko is NOT listed here because it is already loaded
-# from the vendor_boot recovery ramdisk (modules.load.recovery). libmodprobe
-# resolves it automatically via modules.dep when loading the touch drivers.
-TW_LOAD_VENDOR_MODULES := "chipone_tddi_v3_mmi.ko ilitek_v4_mmi.ko"
 
 # Brightness (Qualcomm display backlight sysfs path)
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
 TW_MAX_BRIGHTNESS := 2047
 TW_DEFAULT_BRIGHTNESS := 1200
 
-# Battery: SM6450 (parrot) uses the Qualcomm fuel gauge which registers
-# the power supply as "bms". TWRP's default ("battery") returns stale or
-# zero capacity in recovery; reading from "bms" gives the correct value.
-TW_POWER_SUPPLY_NAME := "bms"
 
 # Utilities
 TW_INCLUDE_RESETPROP := true

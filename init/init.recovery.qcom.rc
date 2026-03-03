@@ -25,6 +25,16 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+on early-init
+    # Load touch drivers and dependencies natively baked into recovery.img
+    insmod /lib/modules/sensors_class.ko
+    insmod /lib/modules/chipone_tddi_v3_mmi.ko
+    insmod /lib/modules/hdcp_qseecom_dlkm.ko
+    insmod /lib/modules/mmi_annotate.ko
+    insmod /lib/modules/mmi_info.ko
+    insmod /lib/modules/ilitek_v4_mmi.ko
+    setprop twrp.modules.loaded true
+
 on init
     mkdir /config
     mount configfs none /config
