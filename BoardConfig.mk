@@ -29,9 +29,12 @@ TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/vendor_ramdisk/etc/fstab.qcom
 TARGET_BOARD_PLATFORM := parrot
 QCOM_BOARD_PLATFORMS += parrot
 TARGET_BOOTLOADER_BOARD_NAME := mumba
-BOARD_SHIPPING_API_LEVEL := 202404
+BOARD_SHIPPING_API_LEVEL := 32
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 BUILD_BROKEN_VENDOR_PROPERTY_NAMESPACE := true
+# Allow soong_build to proceed when VTS proto fuzzer modules (vts_proto_fuzzer_default)
+# are absent — they live in test/vts/ which is not checked out in recovery-only manifests.
+ALLOW_MISSING_DEPENDENCIES := true
 
 # Vendor-specific AIDs (users/groups) for Qualcomm/Motorola init.rc files
 TARGET_FS_CONFIG_GEN := device/motorola/mumba/config.fs
@@ -73,9 +76,8 @@ BOARD_KERNEL_CMDLINE := console=ttyMSM0 loglevel=6 log_buf_len=256K androidboot.
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_RAMDISK_USE_LZ4 := true
 
-# Kernel Modules for vendor_boot
-BOARD_VENDOR_KERNEL_MODULES := $(wildcard $(DEVICE_PATH)/prebuilts/modules/*.ko)
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(BOARD_VENDOR_KERNEL_MODULES)
+# Kernel Modules
+BOARD_VENDOR_DLKM_MODULES := $(wildcard $(DEVICE_PATH)/prebuilts/modules/*.ko)
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(DEVICE_PATH)/modules.load.vendor_boot
 BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(DEVICE_PATH)/modules.load.recovery
 
@@ -109,8 +111,7 @@ BOARD_MOTOROLA_DYNAMIC_PARTITIONS_PARTITION_LIST := \
     system_ext \
     product \
     vendor \
-    vendor_dlkm \
-    system_dlkm
+    vendor_dlkm
 
 # super - 4MB safety margin
 BOARD_MOTOROLA_DYNAMIC_PARTITIONS_SIZE := 8585740288
@@ -176,4 +177,41 @@ BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX_LOCATION := 2
 # Filesystem Configuration
 # =====================================================
 
-TARGET_FS_CONFIG_GEN += device/motorola/mumba/config.fs
+
+# =====================================================
+# TWRP Configuration
+# =====================================================
+
+# UI / Theme
+TW_THEME := portrait_hdpi
+TW_EXTRA_LANGUAGES := true
+TW_NO_SCREEN_BLANK := true
+TW_INPUT_BLACKLIST := "hbtp_vm"
+TW_USE_TOOLBOX := true
+
+
+# Brightness (Qualcomm display backlight sysfs path)
+TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
+TW_MAX_BRIGHTNESS := 2047
+TW_DEFAULT_BRIGHTNESS := 1200
+
+
+# Utilities
+TW_INCLUDE_RESETPROP := true
+TW_INCLUDE_REPACKTOOLS := true
+TW_EXCLUDE_DEFAULT_USB_INIT := true
+BOARD_SUPPRESS_SECURE_ERASE := true
+RECOVERY_SDCARD_ON_DATA := true
+
+# Crypto / Decryption (FBE + metadata encryption)
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_CRYPTO_FBE := true
+TW_INCLUDE_FBE_METADATA_DECRYPT := true
+BOARD_USES_QCOM_FBE_DECRYPTION := true
+
+# Platform version / security patch overrides
+# These prevent AVB rollback issues during TWRP sideload / flashing.
+PLATFORM_VERSION := 99.87.36
+PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
+PLATFORM_SECURITY_PATCH := 2099-12-31
+VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)

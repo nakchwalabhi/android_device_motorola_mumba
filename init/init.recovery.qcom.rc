@@ -25,6 +25,16 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+on early-init
+    # Load touch drivers and dependencies natively baked into recovery.img
+    insmod /lib/modules/sensors_class.ko
+    insmod /lib/modules/chipone_tddi_v3_mmi.ko
+    insmod /lib/modules/hdcp_qseecom_dlkm.ko
+    insmod /lib/modules/mmi_annotate.ko
+    insmod /lib/modules/mmi_info.ko
+    insmod /lib/modules/ilitek_v4_mmi.ko
+    setprop twrp.modules.loaded true
+
 on init
     mkdir /config
     mount configfs none /config
@@ -79,3 +89,13 @@ on property:sys.usb.config=fastboot && property:sys.usb.ffs.ready=1 && property:
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+
+# TWRP sets twrp.modules.loaded=true after TW_LOAD_VENDOR_MODULES completes.
+# At that point the ChipOne TDDI / ILITEK touch drivers are in the kernel and
+# their trusted_touch_enable sysfs nodes are live. Disable QTS (Qualcomm
+# Trusted Touch Session) so the kernel drivers can access the touch IC
+# directly without TrustZone arbitration.
+on property:twrp.modules.loaded=true
+    write /sys/kernel/qts/primary/trusted_touch_enable 0
+    write /sys/devices/platform/soc/990000.i2c/i2c-0/0-0038/trusted_touch_enable 0
+    write /sys/devices/platform/soc/990000.spi/spi_master/spi0/spi0.0/trusted_touch_enable 0

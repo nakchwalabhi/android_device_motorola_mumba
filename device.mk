@@ -5,7 +5,6 @@
 #
 
 DEVICE_PATH := device/motorola/mumba
-PRODUCT_SHIPPING_API_LEVEL := 36
 
 # Dynamic partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
@@ -88,6 +87,11 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/keylayout/gpio-keys.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gpio-keys.kl \
     $(LOCAL_PATH)/configs/keylayout/uinput-fpc.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/uinput-fpc.kl
 
+# Input Device Configuration (IDC) — touchscreen panel variants
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/idc/Chipone-TDDI.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/Chipone-TDDI.idc \
+    $(LOCAL_PATH)/configs/idc/ILITEK-TDDI_1.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/ILITEK-TDDI_1.idc
+
 # Media
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media/media_profiles_parrot_v0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_parrot_v0.xml
@@ -99,3 +103,5 @@ PRODUCT_COPY_FILES += \
 # Wifi
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini
+
+
